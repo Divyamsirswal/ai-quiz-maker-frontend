@@ -1,19 +1,15 @@
 import { create } from 'zustand';
-
-type Answer = {
-    questionId: string;
-    answerText: string;
-};
+import { Question, QuizResult, UserAnswer } from '@/lib/types';
 
 type QuizState = {
-    questions: any[];
+    questions: Question[];
     currentQuestionIndex: number;
-    selectedAnswers: Answer[];
-    quizResult: any | null;
-    setQuizData: (questions: any[]) => void;
+    selectedAnswers: UserAnswer[];
+    quizResult: QuizResult | null;
+    setQuizData: (questions: Question[]) => void;
     selectAnswer: (questionId: string, answerText: string) => void;
     nextQuestion: () => void;
-    setResult: (result: any) => void;
+    setResult: (result: QuizResult) => void;
     reset: () => void;
 };
 

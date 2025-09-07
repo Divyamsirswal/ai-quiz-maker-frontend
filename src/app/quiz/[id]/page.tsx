@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useGetQuiz, useSubmitQuiz } from '@/lib/api';
 import { useQuizStore } from '@/store/quizStore';
 import { Progress } from '@/components/ui/progress';
@@ -39,22 +39,14 @@ export default function QuizPage() {
     }, [quizData, setQuizData, reset]);
 
     const handleSubmit = () => {
-        toast.promise(
-            new Promise((resolve, reject) =>
-                submitMutation.mutate({ quizId, answers: selectedAnswers }, {
-                    onSuccess: (data) => resolve(data),
-                    onError: (error) => reject(error)
-                })
-            ),
-            {
-                loading: "Submitting your answers...",
-                success: (data) => {
-                    setResult(data);
-                    return "Results are in!";
-                },
-                error: (error) => `Error: ${error.message}`
-            }
-        )
+        toast.promise(submitMutation.mutateAsync({ quizId, answers: selectedAnswers }), {
+            loading: "Submitting your answers...",
+            success: (data) => {
+                setResult(data);
+                return "Results are in!";
+            },
+            error: (error) => `Error: ${error.message}`
+        });
     };
 
     const currentQuestion = questions[currentQuestionIndex];

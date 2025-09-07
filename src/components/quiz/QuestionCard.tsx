@@ -4,9 +4,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Question } from '@/lib/types';
 
 interface QuestionCardProps {
-    question: any;
+    question: Question;
     questionIndex: number;
     totalQuestions: number;
     selectedOption: string | undefined;
@@ -37,7 +38,7 @@ export const QuestionCard = ({
                 </CardHeader>
                 <CardContent>
                     <RadioGroup value={selectedOption} onValueChange={onAnswerSelect} className="space-y-3">
-                        {question.options.map((option: any, index: number) => (
+                        {question.options.map((option, index: number) => (
                             <Label key={index} htmlFor={`option-${index}`} className="flex items-center space-x-3 p-4 rounded-lg border hover:bg-accent has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary/10 has-[[data-state=checked]]:text-primary cursor-pointer transition-colors">
                                 <RadioGroupItem value={option.text} id={`option-${index}`} />
                                 <span>{option.text}</span>

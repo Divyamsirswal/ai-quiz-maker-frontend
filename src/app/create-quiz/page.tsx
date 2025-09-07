@@ -29,24 +29,16 @@ export default function CreateQuizPage() {
             return;
         }
 
-        toast.promise(
-            new Promise((resolve, reject) =>
-                mutation.mutate({ topic }, {
-                    onSuccess: (data: any) => resolve(data),
-                    onError: (error: any) => reject(error),
-                })
-            ),
-            {
-                loading: "Generating your quiz... The AI is thinking 🤔",
-                success: (data: any) => {
-                    router.push(`/quiz/${data.quizId}`);
-                    return "Your quiz is ready! Let's go!";
-                },
-                error: (error: any) => {
-                    return `Error: ${error.message}`;
-                },
-            }
-        );
+        toast.promise(mutation.mutateAsync({ topic }), {
+            loading: "Generating your quiz... The AI is thinking 🤔",
+            success: (data) => {
+                router.push(`/quiz/${data.quizId}`);
+                return "Your quiz is ready! Let's go!";
+            },
+            error: (error) => {
+                return `Error: ${error.message}`;
+            },
+        });
     };
 
     return (
